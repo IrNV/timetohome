@@ -1,0 +1,11 @@
+{% extends 'timetracker/base.html' %}
+{% block content %}
+  <h1> Registration </h1>
+  <div class="register">
+      <form action="" method="post">{% csrf_token %}
+          <!-- as_p для того, чтобы каждый элемент формы был с новой строки -->
+          {{ form.as_p }}
+          <button type="submit">Submit</button>
+      </form>
+  </div>
+{% endblock %}
