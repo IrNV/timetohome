@@ -82,10 +82,14 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 }
 """
 DATABASES = {
-   'default' : {
-      'ENGINE' : 'django_mongodb_engine',
-      'NAME' : 'timetracker'
-   }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'timetracker',
+        'USER': 'name',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
 }
 
 # Password validation
@@ -128,3 +132,6 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # url куди перенаправляємо вразі спроби неаутентифікованого користувача отримати доступ до ресурсів
 LOGIN_URL = '/login/' 
+
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
