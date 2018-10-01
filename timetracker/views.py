@@ -73,7 +73,7 @@ class RegistrationFormView(FormView):
         form.save()
 
         # Викликаємо метод базового класу
-        return super(RegisterFormView, self).form_valid(form)
+        return super(RegistrationFormView, self).form_valid(form)
 
 class LoginFormView(FormView):
     form_class = AuthenticationForm
