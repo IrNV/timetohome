@@ -120,3 +120,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# url куди перенаправляємо вразі спроби неаутентифікованого користувача отримати доступ до ресурсів
+LOGIN_URL = '/login/' 

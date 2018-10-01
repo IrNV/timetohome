@@ -1,0 +1,17 @@
+{% extends 'timetracker/base.html' %}
+
+{% block content %}
+  <div class="timetracker_information">
+  	<div class="describe">
+  	  <p>Timetracker is a web service that allow you to track how much time you spend for way from home to university and from university to home. </p>
+  	</div>
+
+  	<p>
+  	  Login: <a href="{% url 'login' %}">Sign in </a>
+  	</p>
+
+  	<p>
+      Registration: <a href="{% url 'registration' %}">Sign up </a>
+  	</p>
+  </div>
+{% endblock %}

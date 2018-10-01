@@ -10,6 +10,11 @@
     text-decoration: none;
 }
 
+.timetracker_information {
+    font-size: 14pt;
+    font-family: 'Arial full Stack';
+}
+
 .content {
     margin-left: 40px;
 }
@@ -24,6 +29,7 @@ h1, h2, h3, h4 {
 
 .date {
     color: #828282;
+    margin-top: 20px;
 }
 
 .save {
@@ -47,6 +53,11 @@ h1, h2, h3, h4 {
 
 .post {
     margin-bottom: 70px;
+}
+
+.post p {
+    font-size: 14pt;
+    
 }
 
 .post h3 a, .post h3 a:visited {

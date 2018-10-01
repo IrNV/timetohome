@@ -3,17 +3,28 @@ from django.utils import timezone
 from .models import Post
 from .forms import PostForm, UserCreateForm
 from django.shortcuts import redirect
-from django.http import HttpResponse
-from django.core import serializers
+from django.views.generic.edit import FormView
+from django.contrib.auth.forms import AuthenticationForm
+# Функция для установки сессионного ключа.
+# По нему django будет определять, выполнил ли вход пользователь.
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 
+def main_page(request):
+	return render(request, 'timetracker/main_page.html')
+
+@login_required
 def post_list(request):
-    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+    posts = Post.objects.filter(author= request.user,
+    	published_date__lte=timezone.now()).order_by('-published_date')
     return render(request, 'timetracker/post_list.html', {'posts': posts})
 
+@login_required
 def post_detail(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+    post = get_object_or_404(Post, pk=pk, author=request.user)
     return render(request, 'timetracker/post_detail.html', {'post': post})
 
+@login_required
 def post_new(request):
     if request.method == "POST":
         form = PostForm(request.POST)
@@ -27,8 +38,9 @@ def post_new(request):
         form = PostForm()
     return render(request, 'timetracker/post_edit.html', {'form': form})
 
+@login_required
 def post_edit(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+    post = get_object_or_404(Post, pk=pk, author=request.user)
     if request.method == "POST":
         form = PostForm(request.POST, instance=post)
         if form.is_valid():
@@ -41,55 +53,45 @@ def post_edit(request, pk):
         form = PostForm(instance=post)
     return render(request, 'timetracker/post_edit.html', {'form': form})
 
+@login_required
 def post_delete(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+    post = get_object_or_404(Post, pk=pk, author=request.user)
     post.delete()
     return redirect('post_list')
 
-
-from django.views.generic.edit import FormView
-class RegisterFormView(FormView):
+class RegistrationFormView(FormView):
     form_class = UserCreateForm
 
-    # Ссылка, на которую будет перенаправляться пользователь в случае успешной регистрации.
-    # В данном случае указана ссылка на страницу входа для зарегистрированных пользователей.
+    # Посилання на яке переходить користувач вразі успішної реєстрації
     success_url = "/login/"
 
-    # Шаблон, который будет использоваться при отображении представления.
+    # Шаблон, який побачить користувач при відображенні представлення.
     template_name = "timetracker/register.html"
 
     def form_valid(self, form):
-        # Создаём пользователя, если данные в форму были введены корректно.
+        # Якщо форма коректна, то додаємо користувача
         form.save()
 
-        # Вызываем метод базового класса
+        # Викликаємо метод базового класу
         return super(RegisterFormView, self).form_valid(form)
-
-
-from django.contrib.auth.forms import AuthenticationForm
-
-# Функция для установки сессионного ключа.
-# По нему django будет определять, выполнил ли вход пользователь.
-from django.contrib.auth import login
 
 class LoginFormView(FormView):
     form_class = AuthenticationForm
 
-    # Аналогично регистрации, только используем шаблон аутентификации.
     template_name = "timetracker/login.html"
 
-    # В случае успеха перенаправим на главную.
-    success_url = "/"
+    success_url = "/posts/"
 
     def form_valid(self, form):
-        # Получаем объект пользователя на основе введённых в форму данных.
+        # Отримуємо об'єкт користувача із форми
         self.user = form.get_user()
 
-        # Выполняем аутентификацию пользователя.
+        # Виконуємо аутентифікацію користувача.
         login(self.request, self.user)
         return super(LoginFormView, self).form_valid(form)
 
 from django.contrib.auth import logout
 def logout_(request):
 	logout(request)
-	return redirect('register')
+	return redirect('login')
+
