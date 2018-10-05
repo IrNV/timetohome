@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import Post
 
+
 class PostForm(forms.ModelForm):
     direction = forms.ChoiceField(choices=[("From home to university", "From home to university"),
     	("From University to home", "From University to home")])

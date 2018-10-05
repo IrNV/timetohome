@@ -10,8 +10,10 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 
+
 def main_page(request):
 	return render(request, 'timetracker/main_page.html')
+
 
 @login_required
 def post_list(request):
@@ -19,10 +21,12 @@ def post_list(request):
     	published_date__lte=timezone.now()).order_by('-published_date')
     return render(request, 'timetracker/post_list.html', {'posts': posts})
 
+
 @login_required
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk, author=request.user)
     return render(request, 'timetracker/post_detail.html', {'post': post})
+
 
 @login_required
 def post_new(request):
@@ -37,6 +41,7 @@ def post_new(request):
     else:
         form = PostForm()
     return render(request, 'timetracker/post_edit.html', {'form': form})
+
 
 @login_required
 def post_edit(request, pk):
@@ -53,11 +58,13 @@ def post_edit(request, pk):
         form = PostForm(instance=post)
     return render(request, 'timetracker/post_edit.html', {'form': form})
 
+
 @login_required
 def post_delete(request, pk):
     post = get_object_or_404(Post, pk=pk, author=request.user)
     post.delete()
     return redirect('post_list')
+
 
 class RegistrationFormView(FormView):
     form_class = UserCreateForm
@@ -75,6 +82,7 @@ class RegistrationFormView(FormView):
         # Викликаємо метод базового класу
         return super(RegistrationFormView, self).form_valid(form)
 
+
 class LoginFormView(FormView):
     form_class = AuthenticationForm
 
@@ -89,6 +97,7 @@ class LoginFormView(FormView):
         # Виконуємо аутентифікацію користувача.
         login(self.request, self.user)
         return super(LoginFormView, self).form_valid(form)
+
 
 from django.contrib.auth import logout
 def logout_(request):
