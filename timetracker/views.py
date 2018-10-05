@@ -5,10 +5,9 @@ from .forms import PostForm, UserCreateForm
 from django.shortcuts import redirect
 from django.views.generic.edit import FormView
 from django.contrib.auth.forms import AuthenticationForm
-# Функція для встановлення сесійного ключа
-# ПО ньому django буде визначати чи здійснив вхід користувач.
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 
 
 def main_page(request):
@@ -99,7 +98,6 @@ class LoginFormView(FormView):
         return super(LoginFormView, self).form_valid(form)
 
 
-from django.contrib.auth import logout
 def logout_(request):
 	logout(request)
 	return redirect('login')
