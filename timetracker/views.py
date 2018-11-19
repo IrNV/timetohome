@@ -8,16 +8,19 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import PostSerializer
 
 def main_page(request):
-	return render(request, 'timetracker/main_page.html')
+    return render(request, 'timetracker/main_page.html')
 
 
 @login_required
 def post_list(request):
-    posts = Post.objects.filter(author= request.user,
-    	published_date__lte=timezone.now()).order_by('-published_date')
+    posts = Post.objects.filter(author=request.user,
+                                published_date__lte=timezone.now()).order_by('-published_date')
     return render(request, 'timetracker/post_list.html', {'posts': posts})
 
 
@@ -99,6 +102,16 @@ class LoginFormView(FormView):
 
 
 def logout_(request):
-	logout(request)
-	return redirect('login')
+    logout(request)
+    return redirect('login')
 
+
+class PostList(APIView):
+
+    def get(self, request):
+        posts = Post.objects.all()
+        serializer = PostSerializer(posts, many=True)
+        return Response(serializer.data)
+
+    def post(self):
+        pass
