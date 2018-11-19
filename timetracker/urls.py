@@ -12,5 +12,6 @@ urlpatterns = [
     url(r'^register/$', views.RegistrationFormView.as_view(), name="registration"),
     url(r'^login/$', views.LoginFormView.as_view(), name="login"),
     url(r'^logout/$', views.logout_, name="logout"),
-    url(r'^timetracker/api/$', views.PostList.as_view()),
+    url(r'^api/posts/$', views.PostList.as_view()),
+    url(r'^api/posts/(?P<pk>\d+)/', views.PostDetail.as_view()),
 ]
