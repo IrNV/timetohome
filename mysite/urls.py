@@ -19,8 +19,8 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'', include('timetracker.urls')),
-    url('auth/', include('djoser.urls')),
-    url('auth/', include('djoser.urls.authtoken')),
-    url('auth/', include('djoser.urls.jwt')),
+    url('^auth/', include('djoser.urls')),
+    url('^auth/', include('djoser.urls.authtoken')),
+    url('^auth/', include('djoser.urls.jwt')),
 ]
 
