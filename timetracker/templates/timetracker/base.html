@@ -11,7 +11,7 @@
         <div class="page-header">
 
             {% if user.is_authenticated %}
-                <a href="{% url 'logout' %}" class="top-menu"><span class="glyphicon glyphicon-off"></span></a>
+                <a href="{% url 'user_logout' %}" class="top-menu"><span class="glyphicon glyphicon-off"></span></a>
                 <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
 
                 <h1><a href="{% url 'post_list' %}">Time tracker</a></h1>

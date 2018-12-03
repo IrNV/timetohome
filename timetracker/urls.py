@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^posts/(?P<pk>\d+)/delete/$', views.post_delete, name='post_delete'),
     url(r'^register/$', views.RegistrationFormView.as_view(), name="registration"),
     url(r'^login/$', views.LoginFormView.as_view(), name="user_login"),
-    url(r'^logout/$', views.logout_, name="logout"),
+    url(r'^logout/$', views.logout_, name="user_logout"),
     url(r'^api/posts/$', views.PostList.as_view()),
     url(r'^api/posts/(?P<pk>\d+)/', views.PostDetail.as_view()),
 ]
