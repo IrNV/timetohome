@@ -109,6 +109,8 @@ def logout_(request):
 
 class PostList(APIView):
 
+	permission_classes = [permissions.IsAuthenticated, ]
+
     def get(self, request):
         posts = Post.objects.all()
         serializer = PostSerializer(posts, many=True)
