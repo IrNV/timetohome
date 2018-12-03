@@ -110,7 +110,7 @@ def logout_(request):
 
 class PostList(APIView):
 
-	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticated,)
 	# permission_classes = (IsAuthenticated,)
 
     def get(self, request):
