@@ -105,7 +105,7 @@ class LoginFormView(FormView):
 
 def logout_(request):
     logout(request)
-    return redirect('login')
+    return redirect('user_login')
 
 
 class PostList(APIView):
