@@ -13,6 +13,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import PostSerializer
 from django.http import Http404
+from rest_framework import permissions
 
 def main_page(request):
     return render(request, 'timetracker/main_page.html')
@@ -109,8 +110,8 @@ def logout_(request):
 
 class PostList(APIView):
 
-	# permission_classes = (permissions.IsAuthenticated,)
-	permission_classes = (IsAuthenticated,)
+	permission_classes = (permissions.IsAuthenticated,)
+	# permission_classes = (IsAuthenticated,)
 
     def get(self, request):
         posts = Post.objects.all()
