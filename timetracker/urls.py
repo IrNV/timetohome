@@ -14,4 +14,8 @@ urlpatterns = [
     url(r'^logout/$', views.logout_, name="logout"),
     url(r'^api/posts/$', views.PostList.as_view()),
     url(r'^api/posts/(?P<pk>\d+)/', views.PostDetail.as_view()),
+    url('auth/', include('djoser.urls')),
+    url('auth/', include('djoser.urls.authtoken')),
+    url('auth/', include('djoser.urls.jwt')),
+
 ]

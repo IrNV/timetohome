@@ -114,7 +114,8 @@ class PostList(APIView):
 	# permission_classes = (IsAuthenticated,)
 
     def get(self, request):
-        posts = Post.objects.all()
+        posts = Post.objects.filter(author=request.user,
+                                    published_date__lte=timezone.now()).order_by('-published_date')
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
 
