@@ -1,7 +1,6 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 from . import views
 from rest_framework.urlpatterns import  format_suffix_patterns
-from django.urls import include
 
 urlpatterns = [
     url(r'^$', views.main_page, name='main_page'),
